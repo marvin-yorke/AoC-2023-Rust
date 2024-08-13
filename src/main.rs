@@ -2,7 +2,7 @@ use std::{fs::File, io::{self, Read}};
 mod solutions;
 
 fn main() -> io::Result<()> {
-  let mut file = File::open("../input/03/input.txt")?;
+  let mut file = File::open("../input/04/test.txt")?;
   let mut content = String::new();
 
   file.read_to_string(&mut content)?;
@@ -12,8 +12,11 @@ fn main() -> io::Result<()> {
     .split("\n")
     .collect();
 
-  let result: u32 = solutions::day03::day03_a(&lines);
-  println!("{result}");
+  let result: u32 = solutions::day04::day04_a(&lines);
+  println!("Part A result: {result}");
+
+  let result: u32 = solutions::day04::day04_b(&lines);
+  println!("Part B result {result}");
 
   Ok(())
 }
