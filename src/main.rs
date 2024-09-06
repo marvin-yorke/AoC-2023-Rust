@@ -1,23 +1,16 @@
-use std::{fs::File, io::{self, Read}};
 mod solutions;
 
-fn main() -> io::Result<()> {
-  let mut file = File::open("../input/05/test.txt")?;
-  // let mut file = File::open("../input/05/input.txt")?;
-  let mut content = String::new();
-
-  file.read_to_string(&mut content)?;
+fn main() {
+  let content = include_str!("../input/06/input.txt");
 
   let lines: Vec<&str> = content
     .trim()
     .split("\n")
     .collect();
 
-  let result: u32 = solutions::day05::day05_a(&lines);
+  let result: usize = solutions::day06::day06_a(&lines);
   println!("Part A result: {result}");
 
-  let result: u32 = solutions::day05::day05_b(&lines);
+  let result: usize = solutions::day06::day06_b(&lines);
   println!("Part B result {result}");
-
-  Ok(())
 }
