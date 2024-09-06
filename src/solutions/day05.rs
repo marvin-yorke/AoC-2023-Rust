@@ -64,7 +64,7 @@ use std::ops::Range;
 use std::cmp::{min, max};
 use almanac::Almanac;
 
-pub fn day05_a(lines: &[&str]) -> u32 {
+pub fn day05_a(lines: &[&str]) -> usize {
   let (seeds_line, almanac_lines) = lines
     .split_first()
     .expect("Failed to parse input");
@@ -90,10 +90,10 @@ pub fn day05_a(lines: &[&str]) -> u32 {
     .into_iter()
     .map(|r| r.start)
     .min()
-    .expect("Failed to get min value") as u32
+    .expect("Failed to get min value") as usize
 }
 
-pub fn day05_b(lines: &[&str]) -> u32 {
+pub fn day05_b(lines: &[&str]) -> usize {
   let (seeds_line, almanac_lines) = lines
     .split_first()
     .expect("Failed to parse input");
@@ -117,7 +117,7 @@ pub fn day05_b(lines: &[&str]) -> u32 {
     .into_iter()
     .map(|r| r.start)
     .min()
-    .expect("Failed to get min value") as u32
+    .expect("Failed to get min value") as usize
 }
 
 #[derive(Debug)]

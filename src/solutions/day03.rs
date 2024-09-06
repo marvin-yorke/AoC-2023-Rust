@@ -35,18 +35,18 @@ impl Coord {
 }
 
 struct Candidate {
-  val: u32,
+  val: usize,
   adjacent_symbols: Vec<Coord>
 }
 
 struct Gear {
   sym: char,
-  ratios: Vec<u32>
+  ratios: Vec<usize>
 }
 
 type Cache = HashMap<Coord, Gear>;
 
-pub fn day03_a(lines: &[&str]) -> u32 {
+pub fn day03_a(lines: &[&str]) -> usize {
   let extended = extend(lines);
   let symbols = parse(lines, &extended);
 
@@ -55,13 +55,13 @@ pub fn day03_a(lines: &[&str]) -> u32 {
     .sum()
 }
 
-pub fn day03_b(lines: &[&str]) -> u32 {
+pub fn day03_b(lines: &[&str]) -> usize {
   let extended = extend(lines);
   let symbols = parse(lines, &extended);
 
   symbols.values()
     .filter(|g| g.sym == '*' && g.ratios.len() == 2)
-    .map(|g| g.ratios[..2].iter().product::<u32>())
+    .map(|g| g.ratios[..2].iter().product::<usize>())
     .sum()
 }
 
@@ -96,7 +96,7 @@ fn parse(lines: &[&str], extended: &[String]) -> Cache {
             // has digit but no existing candidate
             (Some(digit), None) => {
               Some(Candidate {
-                val: digit,
+                val: digit as usize,
                 adjacent_symbols: check_adjacency_left(&mut symbols, &extended, &coord)
               })
             },
@@ -108,7 +108,7 @@ fn parse(lines: &[&str], extended: &[String]) -> Cache {
               ));
 
               Some(Candidate {
-                val: val * 10 + digit,
+                val: val * 10 + digit as usize,
                 adjacent_symbols
               })
             },
@@ -184,7 +184,7 @@ fn check_adjacency_left(symbols: &mut Cache, input: &[String], coord: &Coord) ->
 }
 
 /// Add gear ratio value to symbols at adjacent coordinates.
-fn register_gear_ratio(symbols: &mut Cache, adjacent_symbols: Vec<Coord>, val: u32) {
+fn register_gear_ratio(symbols: &mut Cache, adjacent_symbols: Vec<Coord>, val: usize) {
   for coord in adjacent_symbols {
     symbols.entry(coord).and_modify(|tuple| {
       tuple.ratios.push(val);

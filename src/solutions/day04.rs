@@ -5,42 +5,42 @@
 use std::collections::HashSet;
 
 struct Card {
-  winning_numbers: HashSet<u32>,
-  numbers: HashSet<u32>
+  winning_numbers: HashSet<usize>,
+  numbers: HashSet<usize>
 }
 
 impl Card {
   fn parse(winning: &str, numbers: &str) -> Self {
     Self {
       winning_numbers: winning.split_whitespace()
-        .map(|val| val.parse::<u32>().unwrap())
+        .map(|val| val.parse::<usize>().unwrap())
         .collect(),
       numbers: numbers.split_whitespace()
-        .map(|val| val.parse::<u32>().unwrap())
+        .map(|val| val.parse::<usize>().unwrap())
         .collect()
     }
   }
 }
 
-fn bonus_points(line: &str) -> u32 {
+fn bonus_points(line: &str) -> usize {
   line
     .split_once(": ")
     .and_then(|(_, s)| s.split_once(" | "))
     .map(|(w, n)| Card::parse(w, n))
-    .map_or(0, |c| c.winning_numbers.intersection(&c.numbers).count() as u32)
+    .map_or(0, |c| c.winning_numbers.intersection(&c.numbers).count() as usize)
 }
 
-pub fn day04_a(lines: &[&str]) -> u32 {
+pub fn day04_a(lines: &[&str]) -> usize {
   lines.into_iter()
     .map(|&l| bonus_points(l))
     .filter(|&p| p > 0)
-    .map(|p| 2u32.pow(p - 1))
+    .map(|p| 2usize.pow((p - 1) as u32))
     .sum()
 }
 
-pub fn day04_b(lines: &[&str]) -> u32 {
+pub fn day04_b(lines: &[&str]) -> usize {
   let count = lines.len();
-  let mut stack: Vec<u32> = std::iter::repeat(1).take(count).collect();
+  let mut stack: Vec<usize> = std::iter::repeat(1).take(count).collect();
 
   for (i, &line) in lines.into_iter().enumerate() {
     let won = bonus_points(line);

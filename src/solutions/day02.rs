@@ -6,10 +6,10 @@ use std::cmp::max;
 
 #[derive(Debug)]
 struct Game {
-  id: u32,
-  red: u32,
-  green: u32,
-  blue: u32
+  id: usize,
+  red: usize,
+  green: usize,
+  blue: usize
 }
 
 impl Game {
@@ -17,15 +17,15 @@ impl Game {
     let (game, rounds) = s.split_once(": ").unwrap();
 
     let id = game.strip_prefix("Game ")
-      .and_then(|num_str| num_str.parse::<u32>().ok()).unwrap();
+      .and_then(|num_str| num_str.parse::<usize>().ok()).unwrap();
 
-    fn parse_round(round: &str) -> (u32, u32, u32) {
-      let initial: (u32, u32, u32) = (0, 0, 0);
+    fn parse_round(round: &str) -> (usize, usize, usize) {
+      let initial: (usize, usize, usize) = (0, 0, 0);
 
       round.split(", ")
         .map(|s|
           s.split_once(" ").and_then(|(num, color)|
-            num.parse::<u32>().map(|num| (num, color)).ok()
+            num.parse::<usize>().map(|num| (num, color)).ok()
           )
         )
         .fold(initial, |acc, color| {
@@ -56,12 +56,12 @@ impl Game {
     }
   }
 
-  fn is_possible(&self, red: u32, green: u32, blue: u32) -> bool {
+  fn is_possible(&self, red: usize, green: usize, blue: usize) -> bool {
     self.red <= red && self.green <= green && self.blue <= blue
   }
 }
 
-fn day02_a(lines: &[&str]) -> u32 {
+fn day02_a(lines: &[&str]) -> usize {
   lines.iter()
     .map(|&line| Game::from_string(line))
     .filter_map(|game|
@@ -74,7 +74,7 @@ fn day02_a(lines: &[&str]) -> u32 {
     .sum()
 }
 
-fn day02_b(lines: &[&str]) -> u32 {
+fn day02_b(lines: &[&str]) -> usize {
   lines.iter()
     .map(|&line| Game::from_string(line))
     .map(|game| game.red * game.green * game.blue)
